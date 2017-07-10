@@ -9,7 +9,7 @@ export default {
   mounted(){
     axios.get('https://metaheuristicsapi.herokuapp.com/papers/papersPerYear')
       .then((response)=>{
-        console.log(response)
+        //console.log(response)
         var x=[], y=[], sizes=[], bestAl=[];
         response.data.forEach(v => {
           x.push(v._id.year);
