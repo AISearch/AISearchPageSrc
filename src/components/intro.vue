@@ -38,6 +38,15 @@
         h5 by {{topDetail[2].author}}
           br
           small {{algorithms[2].count}} References scince {{algorithms[2].countYears[0].year}}
+  .page#listAll
+    h1 List 'em All
+    .container
+      input(type="text" id="filter" v-model="filter" placeholder="Algorithm Name")
+    .row
+      .col(v-for="a in algorithms" v-if="a._id.algorithmname.toLowerCase().includes(filter.toLowerCase())")
+        .card(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: a._id.algorithmname} })")
+          .card-content
+            p {{a._id.algorithmname}}
   .page#Makers
     h5 This website is brougth to you by:
     br
@@ -69,7 +78,8 @@ export default {
       loading: true,
       algorithms: [],
       randNum : 0,
-      topDetail: []
+      topDetail: [],
+      filter: ""
     }
   },
   components:{
@@ -107,11 +117,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import url('https://fonts.googleapis.com/css?family=Bad+Script|Courgette|Poiret+One')
+
 .bigTitleDiv
   position: absolute
   left: 50%
   top: 50%
   transform: translate(-50%,-50%)
+  font-family: 'Poiret One', cursive
 #intro
   background: linear-gradient(45deg,#EEFEF6,#FFF3F7)
   background-attachment: fixed
@@ -137,6 +150,17 @@ export default {
 .page
   min-height: 100vh
   padding-top: 20px
+  h1
+    font-family: 'Bad Script', cursive
+#listAll
+  background: linear-gradient(90deg,#FFFADF,#ECF6F0)
+  background-attachment: fixed
+  overflow-y: hidden
+  height: 100vh
+  #filter
+    font-size: 40px
+    font-family: 'Courgette', cursive
+    padding: 10px
 #PubPerYear
   background: linear-gradient(90deg,#FFFADF,#ECF6F0)
   background-attachment: fixed

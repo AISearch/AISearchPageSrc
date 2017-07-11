@@ -2,7 +2,7 @@
 .container-fluid
   .AlgorithmPage
     .row.centerDiv
-      .col.backEffect(v-for="(w, index) in words" v-bind:class="{active: randNum == w[1]}")
+      .col.backEffect(v-for="(w, index) in words" v-bind:class="{active: randNum == w[1]}" v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, title: w[0]} })")
         p(v-bind:style="{fontSize: (24 - w[1]/16) + 'px'}") {{w[0]}}
       .bigTitleDiv
         h1 {{algorithmname}}
@@ -22,12 +22,13 @@
       h5 Most used words on titles works:
       .row
         .col(v-for="w in firstWords")
-          .card
+          .card(v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, title: w[0]} })")
             .card-content
               p {{w[0]}}
               p {{w[1]}}
   .page#PubPerYear
     h1 References per year
+    br
     PubPerYear(:algorithmname="algorithmname")
 </template>
 
@@ -103,6 +104,7 @@ export default {
   left: 50%
   top: 50%
   transform: translate(-50%,-50%)
+  font-family: 'Poiret One', cursive
 .centerDiv
   display: table
   width: 95%
@@ -110,6 +112,8 @@ export default {
 .page
   min-height: 100vh
   padding-top: 20px
+  h1
+    font-family: 'Bad Script', cursive
 #PubPerYear
   background: linear-gradient(90deg,#FFFADF,#ECF6F0)
   background-attachment: fixed
