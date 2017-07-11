@@ -15,20 +15,29 @@
     h1 Publications Per year
     h5 Every year more and more scientific works make use of this algorithms
     br
-    PubPerYear
+    PubPerYear(algorithmname="")
   .page#HallOfFame
     h1 Hall of Fame
     .row
-      .col.s12
+      .col.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[0].title} })")
+        img(:src="topDetail[0].imgUrl", alt="alt" style="max-width:200px;").circle
         h2 {{algorithms[0]._id.algorithmname}}
-        h5 {{algorithms[0].count}} References scince {{algorithms[0].countYears[0].year}}
+        h5 by {{topDetail[0].author}}
+          br
+          small {{algorithms[0].count}} References scince {{algorithms[0].countYears[0].year}}
     .row
-      .col.m6
+      .col.m6(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[1].title} })")
+        img(:src="topDetail[1].imgUrl", alt="alt"  style="max-width:200px;").circle
         h3 {{algorithms[1]._id.algorithmname}}
-        h5 {{algorithms[1].count}} References scince {{algorithms[1].countYears[0].year}}
-      .col.m6
+        h5 by {{topDetail[1].author}}
+          br
+          small {{algorithms[1].count}} References scince {{algorithms[1].countYears[0].year}}
+      .col.m6(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[2].title} })")
+        img(:src="topDetail[2].imgUrl", alt="alt"  style="max-width:200px;").circle
         h3 {{algorithms[2]._id.algorithmname}}
-        h5 {{algorithms[2].count}} References scince {{algorithms[2].countYears[0].year}}
+        h5 by {{topDetail[2].author}}
+          br
+          small {{algorithms[2].count}} References scince {{algorithms[2].countYears[0].year}}
   .page#Makers
     h5 This website is brougth to you by:
     br
@@ -60,6 +69,7 @@ export default {
       loading: true,
       algorithms: [],
       randNum : 0,
+      topDetail: []
     }
   },
   components:{
@@ -74,6 +84,15 @@ export default {
           this.algorithms.push(v);
         });
         this.loading = false;
+        axios.get('http://metaheuristicsapi.herokuapp.com/list?query={%22$or%22:[{%22title%22:%22' +
+          this.algorithms[0]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[1]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[2]._id.algorithmname + '%22}]}')
+          .then((response)=>{
+            response.data.forEach( a => {
+              this.topDetail.push(a);
+            });
+          }).catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(function (error) {
         console.log(error);

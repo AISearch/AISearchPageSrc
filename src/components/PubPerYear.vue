@@ -1,21 +1,34 @@
 <template lang="pug">
-#graph
+.someDiv(:id="'graph' + algorithmname")
 </template>
 
 <script>
 const Plotly = require('plotly.js/dist/plotly.js');
 var plotlyData=[];
 export default {
+  props:["algorithmname"],
   mounted(){
+    plotlyData=[];
     axios.get('https://metaheuristicsapi.herokuapp.com/papers/papersPerYear')
       .then((response)=>{
         //console.log(response)
         var x=[], y=[], sizes=[], bestAl=[];
         response.data.forEach(v => {
-          x.push(v._id.year);
-          y.push(v.papers);
-          sizes.push(6+Math.log2(parseInt(v.papers)));
-          bestAl.push(v.algorithms[0].algorithmname + " " + Math.floor(v.algorithms[0].countReferences/parseInt(v.papers)*100) + "%");
+          if(this.algorithmname == ""){
+            x.push(v._id.year);
+            y.push(v.papers);
+            sizes.push(6+Math.log2(parseInt(v.papers)));
+            bestAl.push(v.algorithms[0].algorithmname + " " + Math.floor(v.algorithms[0].countReferences/parseInt(v.papers)*100) + "%");
+          }else{
+            v.algorithms.forEach( a => {
+              if(a.algorithmname == this.algorithmname){
+                x.push(v._id.year);
+                y.push(a.countReferences);
+                sizes.push(6+Math.log2(parseInt(a.countReferences)));
+                bestAl.push(a.algorithmname + " " + Math.floor(a.countReferences/parseInt(v.papers)*100) + "%");
+              }
+            });
+          }
         });
         plotlyData.push({
           x,y, type: 'scatter',
@@ -34,7 +47,7 @@ export default {
             }
           }
         });
-        Plotly.newPlot('graph', plotlyData);
+        Plotly.newPlot('graph' + this.algorithmname, plotlyData);
       })
       .catch(function (error) {
         console.log(error);

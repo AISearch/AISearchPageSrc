@@ -18,5 +18,5 @@ export default new Router({
       name: 'Algorithm',
       component: Algorithm
     }
-  ]
+  ],
 })
