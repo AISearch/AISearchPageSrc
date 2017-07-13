@@ -1,6 +1,6 @@
 <template lang="pug">
 .container-fluid
-  .AlgorithmPage
+  .AlgorithmPage.fullH
     .row.centerDiv
       .col.backEffect(v-for="(w, index) in words" v-bind:class="{active: randNum == w[1]}" v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, title: w[0]} })")
         p(v-bind:style="{fontSize: (24 - w[1]/16) + 'px'}") {{w[0]}}
@@ -8,14 +8,16 @@
         h1 {{algorithmname}}
         h5 by {{details.author}}, {{details.year}}
   .page
-    h1 Details
+    h2 Details
     .container.left-align
-      h2 {{ algorithmname }}
-      br
       img(v-if="details.imgUrl" :src="details.imgUrl", alt="alt" style="width:150px; float: right").circle
-      h5 Author: {{details.author}}
-      h5 Year of Publication: {{details.year}}
-      h5 Original Paper Abstract:
+      h3.metaName {{ algorithmname }}
+      h5
+        small Author: {{details.author}}
+      h5
+        small Year of Publication: {{details.year}}
+      h5
+       small Original Paper Abstract:
       .abs {{details.abstract || 'No abstract available'}}
       p.link.center
         a(v-if="details.urlPaper" :href="details.urlPaper") Read More
@@ -25,9 +27,9 @@
           .card(v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, title: w[0]} })")
             .card-content
               p {{w[0]}}
-              p {{w[1]}}
+                small  {{Math.floor(w[1]/firstWords[0][1]*100) + "%"}}
   .page#PubPerYear
-    h1 References per year
+    h2 References per year
     br
     PubPerYear(:algorithmname="algorithmname")
 </template>
@@ -65,7 +67,7 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
-      axios.get('http://metaheuristicsapi.herokuapp.com/list?query={%22title%22:%22' + this.algorithmname + '%22}')
+      axios.get('https://metaheuristicsapi.herokuapp.com/list?query={%22title%22:%22' + this.algorithmname + '%22}')
         .then((response)=>{
           this.details = response.data[0];
         })
@@ -79,42 +81,10 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped="">
+<style lang="sass" scoped>
+@import "./../assets/_style.sass"
 .AlgorithmPage
-  background: linear-gradient(45deg,#EEFEF6,#FFF3F7)
-  background-attachment: fixed
-  height: 100vh
-  overflow-y: hidden
-  .backEffect
-    position: relative
-    //display: block
-    //width: 130px
-    height: 50px
-    opacity: 0.07
-    transition: all 0.7s
-    transition-delay: 1s
-  .backEffect:hover, .backEffect.active
-    opacity: 1
-    transform: scale(1.2)
-    transition: all 0.7s
-    transition-delay: 0s
-
-.bigTitleDiv
-  position: absolute
-  left: 50%
-  top: 50%
-  transform: translate(-50%,-50%)
-  font-family: 'Poiret One', cursive
-.centerDiv
-  display: table
-  width: 95%
-  margin: 10px auto
-.page
-  min-height: 100vh
-  padding-top: 20px
-  h1
-    font-family: 'Bad Script', cursive
+  +gradientBackground(45deg,#EEFEF6,#FFF3F7)
 #PubPerYear
-  background: linear-gradient(90deg,#FFFADF,#ECF6F0)
-  background-attachment: fixed
+  +gradientBackground(90deg,#FFFADF,#ECF6F0)
 </style>

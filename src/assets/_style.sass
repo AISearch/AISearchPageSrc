@@ -1,0 +1,47 @@
+=gradientBackground($Ang, $Color, $Color2)
+  background: linear-gradient($Ang, $Color, $Color2)
+  background-attachment: fixed
+
+.fullH
+  height: 100vh
+  overflow-y: hidden
+
+.minFullH
+  min-height: 100vh
+
+.centerDiv
+  display: table
+  width: 95%
+  margin: 10px auto
+
+.page
+  min-height: 100vh
+  padding-top: 20px
+  h1, h2
+    font-family: 'Bad Script', cursive
+
+.metaName
+  font-family: 'Poiret One', cursive
+  font-weight: 400
+
+.bold
+  font-weight: 800
+
+.backEffect
+  position: relative
+  height: 50px
+  opacity: 0.07
+  transition: all 0.7s
+  transition-delay: 1s
+.backEffect:hover, .backEffect.active
+  opacity: 1
+  transform: scale(1.2)
+  transition: all 0.7s
+  transition-delay: 0s
+
+.bigTitleDiv
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%,-50%)
+  font-family: 'Poiret One', cursive

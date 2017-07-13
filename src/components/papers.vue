@@ -48,7 +48,7 @@ export default {
     }
   },
   mounted(){
-    var apiUrl = 'http://metaheuristicsapi.herokuapp.com/papers?';
+    var apiUrl = 'https://metaheuristicsapi.herokuapp.com/papers?';
     var params = [];
     var query = {};
     if(this.$route.query.algorithmname)

@@ -1,6 +1,6 @@
 <template lang="pug">
 .appDiv
-  .container-fluid#intro
+  .container-fluid#intro.fullH
     .row.center.centerDiv
       .loading(v-if="loading")
         h1 Loading
@@ -12,60 +12,44 @@
       h5 Metaheuristics are
         TextChanger(:arr="['Nature Wisdom', 'a Mith?', 'Fun to Watch', 'Complicated', 'Mysterius']")
   .page#PubPerYear
-    h1 Publications Per year
+    h2 Publications Per year
     h5 Every year more and more scientific works make use of this algorithms
     br
     PubPerYear(algorithmname="")
   .page#HallOfFame
-    h1 Hall of Fame
+    h2 Hall of Fame
     .row
       .col.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[0].title} })")
-        img(:src="topDetail[0].imgUrl", alt="alt" style="max-width:200px;").circle
-        h2 {{algorithms[0]._id.algorithmname}}
-        h5 by {{topDetail[0].author}}
-          br
-          small {{algorithms[0].count}} References scince {{algorithms[0].countYears[0].year}}
+        img(v-if="topDetail[0].imgUrl" :src="topDetail[0].imgUrl", alt="alt" style="max-width:200px;").circle
+        h3.metaName.bold {{algorithms[0]._id.algorithmname}}
+        h5
+          small by {{topDetail[0].author}}
+            br
+            small {{algorithms[0].count}} References scince {{algorithms[0].countYears[0].year}}
     .row
       .col.m6(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[1].title} })")
-        img(:src="topDetail[1].imgUrl", alt="alt"  style="max-width:200px;").circle
-        h3 {{algorithms[1]._id.algorithmname}}
-        h5 by {{topDetail[1].author}}
-          br
-          small {{algorithms[1].count}} References scince {{algorithms[1].countYears[0].year}}
+        img(v-if="topDetail[1].imgUrl" :src="topDetail[1].imgUrl", alt="alt"  style="max-width:200px;").circle
+        h4.metaName.bold {{algorithms[1]._id.algorithmname}}
+        h5
+          small by {{topDetail[1].author}}
+            br
+            small {{algorithms[1].count}} References scince {{algorithms[1].countYears[0].year}}
       .col.m6(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[2].title} })")
-        img(:src="topDetail[2].imgUrl", alt="alt"  style="max-width:200px;").circle
-        h3 {{algorithms[2]._id.algorithmname}}
-        h5 by {{topDetail[2].author}}
-          br
-          small {{algorithms[2].count}} References scince {{algorithms[2].countYears[0].year}}
-  .page#listAll
-    h1 List 'em All
+        img(v-if="topDetail[2].imgUrl" :src="topDetail[2].imgUrl", alt="alt"  style="max-width:200px;").circle
+        h4.metaName.bold {{algorithms[2]._id.algorithmname}}
+        h5
+          small by {{topDetail[2].author}}
+            br
+            small {{algorithms[2].count}} References scince {{algorithms[2].countYears[0].year}}
+  .page#listAll.fullH
+    h2 List 'em All
     .container
-      input(type="text" id="filter" v-model="filter" placeholder="Algorithm Name")
+      input(type="text" id="filter" v-model="filter" placeholder="Algorithm Name").metaName.bold
     .row
       .col(v-for="a in algorithms" v-if="a._id.algorithmname.toLowerCase().includes(filter.toLowerCase())")
         .card(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: a._id.algorithmname} })")
           .card-content
-            p {{a._id.algorithmname}}
-  .page#Makers
-    h5 This website is brougth to you by:
-    br
-    .row
-      .col.m6.s12
-        img.profile.circle.responsive-img(src="../assets/Adolfo.png", alt="alt")
-        h3 Adolfo Reyna
-        p PhD Student of UABC, Mexicalli, Mexico.
-        p aeroreyna@gmail.com
-      .col.m6.s12
-        img.profile.circle.responsive-img(src="../assets/Abraham.png", alt="alt")
-        h3 Fernando A. Fausto
-        p PhD Student of UDG, Guadalajara, Mexico.
-        p neosbreak@hotmail.com
-    br
-    h5 We
-      TextChanger(:arr="['Code Algorithms', 'do Crazy Science', 'fight in Super Smash', 'Write Papers']")
-      | for food or
-      a(href="#")  donations
+            p.metaName.bold {{a._id.algorithmname}}
 </template>
 
 <script>
@@ -94,7 +78,7 @@ export default {
           this.algorithms.push(v);
         });
         this.loading = false;
-        axios.get('http://metaheuristicsapi.herokuapp.com/list?query={%22$or%22:[{%22title%22:%22' +
+        axios.get('https://metaheuristicsapi.herokuapp.com/list?query={%22$or%22:[{%22title%22:%22' +
           this.algorithms[0]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[1]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[2]._id.algorithmname + '%22}]}')
           .then((response)=>{
             response.data.forEach( a => {
@@ -117,31 +101,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import url('https://fonts.googleapis.com/css?family=Bad+Script|Courgette|Poiret+One')
+@import "./../assets/_style.sass"
 
-.bigTitleDiv
-  position: absolute
-  left: 50%
-  top: 50%
-  transform: translate(-50%,-50%)
-  font-family: 'Poiret One', cursive
 #intro
-  background: linear-gradient(45deg,#EEFEF6,#FFF3F7)
-  background-attachment: fixed
-  height: 100vh
-  overflow-y: hidden
+  +gradientBackground(45deg,#EEFEF6,#FFF3F7)
   .backEffect
-    display: block
     width: 130px
     height: 100px
-    opacity: 0.07
-    transition: all 0.7s
-    transition-delay: 1s
-  .backEffect:hover, .backEffect.active
-    opacity: 1
-    transform: scale(1.2)
-    transition: all 0.7s
-    transition-delay: 0s
 
 .centerDiv
   display: table
@@ -153,22 +119,11 @@ export default {
   h1
     font-family: 'Bad Script', cursive
 #listAll
-  background: linear-gradient(90deg,#FFFADF,#ECF6F0)
-  background-attachment: fixed
-  overflow-y: hidden
-  height: 100vh
+  +gradientBackground(90deg,#FFFADF,#ECF6F0)
   #filter
-    font-size: 40px
-    font-family: 'Courgette', cursive
-    padding: 10px
+    font-size: 28px
+    padding: 20px
 #PubPerYear
-  background: linear-gradient(90deg,#FFFADF,#ECF6F0)
-  background-attachment: fixed
-#Makers
-  background: linear-gradient(45deg,#EEFEF6,#FFF3F7)
-  background-attachment: fixed
-.profile
-  width: 100%
-  max-width: 400px
-  max-height: 400px
+  +gradientBackground(90deg,#FFFADF,#ECF6F0)
+
 </style>
