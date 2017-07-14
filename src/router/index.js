@@ -11,7 +11,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Intro',
+      name: 'Home',
       component: Intro
     },
     {
@@ -26,6 +26,7 @@ export default new Router({
     }
   ],
   scrollBehavior (to, from, savedPosition) {
-      return { x: 0, y: 0 }
+    console.log(to, from, savedPosition);
+    return { x: 0, y: 0 }
   }
 })

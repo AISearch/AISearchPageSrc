@@ -16,7 +16,7 @@
     h5 Every year more and more scientific works make use of this algorithms
     br
     PubPerYear(algorithmname="")
-  .page#HallOfFame
+  .page#HallOfFame(v-if="topDetail.length != 0")
     h2 Hall of Fame
     .row
       .col.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[0].title} })")
@@ -27,14 +27,14 @@
             br
             small {{algorithms[0].count}} References scince {{algorithms[0].countYears[0].year}}
     .row
-      .col.m6(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[1].title} })")
+      .col.m6.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[1].title} })")
         img(v-if="topDetail[1].imgUrl" :src="topDetail[1].imgUrl", alt="alt"  style="max-width:200px;").circle
         h4.metaName.bold {{algorithms[1]._id.algorithmname}}
         h5
           small by {{topDetail[1].author}}
             br
             small {{algorithms[1].count}} References scince {{algorithms[1].countYears[0].year}}
-      .col.m6(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[2].title} })")
+      .col.m6.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[2].title} })")
         img(v-if="topDetail[2].imgUrl" :src="topDetail[2].imgUrl", alt="alt"  style="max-width:200px;").circle
         h4.metaName.bold {{algorithms[2]._id.algorithmname}}
         h5
@@ -45,7 +45,7 @@
     h2 List 'em All
     .container
       input(type="text" id="filter" v-model="filter" placeholder="Algorithm Name").metaName.bold
-    .row
+    .row.centerDiv
       .col(v-for="a in algorithms" v-if="a._id.algorithmname.toLowerCase().includes(filter.toLowerCase())")
         .card(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: a._id.algorithmname} })")
           .card-content

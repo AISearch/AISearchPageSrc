@@ -1,5 +1,10 @@
 <template lang="pug">
   <div id="app">
+    .nav
+      router-link(:to="'/'") AISearch
+      router-link(v-if="$route.query.algorithmname" :to="'/Algorithm/' + $route.query.algorithmname")  > {{$route.query.algorithmname}}
+      span  > {{$route.name}}
+
     <router-view></router-view>
     .page#Makers
       h2 AISearch is brougth to you by:
@@ -7,7 +12,7 @@
       .row
         .col.m6.s12
           img.profile.circle.responsive-img(src="./assets/Adolfo.png", alt="alt")
-          h3.metaName.bold Adolfo Reyna
+          h3.metaName.bold Adolfo Reyna Orta
           p PhD Student of UABC, Mexicalli, Mexico.
           p aeroreyna@gmail.com
         .col.m6.s12
@@ -62,6 +67,16 @@ export default {
   +gradientBackground(45deg,#EEFEF6,#FFF3F7)
   .profile
     width: 100%
-    max-width: 400px
-    max-height: 400px
+    max-width: 200px
+    max-height: 200px
+    z-index: 100
+
+.nav
+  position: fixed
+  left: 15px
+  top: 15px
+  background-color: rgba(255,255,255,0.5)
+  padding: 5px
+  z-index: 10000
+
 </style>
