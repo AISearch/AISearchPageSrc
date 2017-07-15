@@ -21,17 +21,29 @@
       .abs {{details.abstract || 'No abstract available'}}
       p.link.center
         a(v-if="details.urlPaper" :href="details.urlPaper") Read More
-      h5 Most used words on titles works:
       .row
-        .col(v-for="w in firstWords")
-          .card(v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, title: w[0]} })")
-            .card-content
-              p {{w[0]}}
+        .col.m6.s12
+          h5.center
+            small Most used words on titles works:
+          center(v-if="firstWords.length > 0")
+            p
+              .chip(v-for="w in firstWords" v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, title: w[0]} })")
+                | {{w[0]}}
                 small  {{Math.floor(w[1]/firstWords[0][1]*100) + "%"}}
+        .col.m6.s12
+          h5.center
+            small Authors refering this algorihtm:
+          center
+            p
+              .chip(v-for="(a, i) in authors" v-if="a._id.authors && i<20" v-on:click="$router.push({ name: 'Papers', query:{algorithmname: algorithmname, author: a._id.authors} })")
+                | {{a._id.authors}}
+                small  {{a.count}}
   .page#PubPerYear
     h2 References per year
     br
     PubPerYear(:algorithmname="algorithmname")
+
+    br
 </template>
 
 <script>
@@ -44,7 +56,8 @@ export default {
       words: [],
       firstWords: [],
       randNum : 0,
-      details: {}
+      details: {},
+      authors: []
     }
   },
   components:{
@@ -77,6 +90,15 @@ export default {
       setInterval(()=>{
         this.randNum = Math.floor(Math.random()*100);
       }, 300);
+      axios.get('https://metaheuristicsapi.herokuapp.com/papers/algorithmAuthors/' + this.algorithmname)
+        .then((response)=>{
+          response.data.forEach(a => {
+            this.authors.push(a);
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
   }
 }
 </script>

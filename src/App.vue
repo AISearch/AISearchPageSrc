@@ -25,6 +25,7 @@
         TextChanger(:arr="['Code Algorithms', 'do Crazy Science', 'fight in Super Smash', 'Write Papers']")
         | for food or
         a(href="#")  donations
+      br
   </div>
 </template>
 
