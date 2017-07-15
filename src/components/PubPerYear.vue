@@ -1,5 +1,5 @@
 <template lang="pug">
-.someDiv(:id="'graph' + algorithmname")
+.someDiv(:id="'graph'")
 </template>
 
 <script>
@@ -7,6 +7,11 @@ const Plotly = require('plotly.js/dist/plotly.js');
 var plotlyData=[];
 export default {
   props:["algorithmname"],
+  data(){
+    return {
+      prevX: 0
+    }
+  },
   mounted(){
     plotlyData=[];
     axios.get('https://metaheuristicsapi.herokuapp.com/papers/papersPerYear')
@@ -47,7 +52,20 @@ export default {
             }
           }
         });
-        Plotly.newPlot('graph' + this.algorithmname, plotlyData);
+        Plotly.newPlot('graph', plotlyData);
+        var myPlot = document.getElementById('graph');
+        myPlot.on('plotly_click', (data) => {
+          if(this.prevX != data.points[0].x){
+            this.prevX = data.points[0].x;
+            Materialize.toast(data.points[0].y + ' articles, Click again to search them.', 4000)
+            return
+          }
+          if(!this.algorithmname){
+            this.$router.push({name:"Papers", query:{year:data.points[0].x + ""}})
+          }else{
+            this.$router.push({name:"Papers", query:{year:data.points[0].x + "", algorithmname:this.algorithmname}})
+          }
+        });
       })
       .catch(function (error) {
         console.log(error);

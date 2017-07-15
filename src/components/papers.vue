@@ -9,7 +9,7 @@
       p(v-if="$route.query.title") Filter Title: {{this.$route.query.title}}
       p(v-if="$route.query.sort") Sort by: {{$route.query.sort}}
       p(v-if="$route.query.author") Author: {{$route.query.author}}
-      .strictSelector
+      .strictSelector(v-if="query.algorithmname")
         input(type="checkbox" v-model="query.strict" id="strict")
         label(for="strict") Strict
       .sortBy
@@ -18,16 +18,15 @@
           label(:for="a[0]" v-on:click="query.sort=a[0]") {{a[1]}}
         .switch
           label
-            Off
             input(type="checkbox" v-model="query.inverse")
             span.lever
-            Off
-          | Inverse
+            | Inverse
       br
       button.btn(type="submit" v-on:click="query.skip=0;pushRoute()") Update Search
     .col.m9.s12
       .container-fluid
-        br
+        p
+          small {{total}} Articles found. Page {{page}}/{{pages}}
         .paper(v-for="(p, index) in data").left-align
           .col.s12
             p
@@ -40,6 +39,7 @@
               small {{p.pubtitle}}
               br
               small Year: {{p.year}}
+              small(v-if="!query.algorithmname" v-on:click="query.algorithmname=p.algorithmname;query.skip=0;pushRoute()") , Reference to: {{ p.algorithmname }}
           hr(v-if="index < data.length-1")
         .col.s12
           ul.pagination
@@ -114,6 +114,9 @@ export default {
       }
       if(this.$route.query.author){
         query.push({authors: { "$elemMatch" : {"$regex" : this.$route.query.author }}});
+      }
+      if(this.$route.query.year){
+        query.push({year: this.$route.query.year });
       }
       if(query) params.push('query={"$and":' + JSON.stringify(query) + '}');
       if(this.$route.query.sort)
