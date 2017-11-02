@@ -12,25 +12,40 @@
       .row
         .col.m6.s12
           img.profile.circle.responsive-img(src="./assets/Adolfo.png", alt="alt")
-          h3.metaName.bold Adolfo Reyna Orta
+          h3.metaName.bold
+            a(href="https://www.researchgate.net/profile/Adolfo_Reyna_Orta" target="_blank") Adolfo Reyna Orta
           p PhD Student of UABC, Mexicalli, Mexico.
-          p aeroreyna@gmail.com
+          p
+            a(href="mailto:aeroreyna@gmail.com") aeroreyna@gmail.com
         .col.m6.s12
           img.profile.circle.responsive-img(src="./assets/Abraham.png", alt="alt")
           h3.metaName.bold Fernando A. Fausto
           p PhD Student of UDG, Guadalajara, Mexico.
-          p neosbreak@hotmail.com
+          p
+            a(href="mailto:neosbreak@hotmail.com") neosbreak@hotmail.com
       br
       h5 We
         TextChanger(:arr="['Code Algorithms', 'do Crazy Science', 'fight in Super Smash', 'Write Papers']")
         | for food or
         a(href="#")  donations
+      h1
+        a(href="https://github.com/AISearch/AISearchBackend" target="_blank") <i class="fa fa-github" aria-hidden="true"></i>
+        span(onclick="toClipboard()") &nbsp;<i class="fa fa-bitcoin" aria-hidden="true"></i>
+        a(href="http://thesciencematrix.com/" target="_blank") &nbsp;<i class="fa fa-rss" aria-hidden="true"></i>
       br
+      input#bitcoinInput(type="text" style="opacity:0" value="184zszakSnvM8ZpfJYwhoyppGdeiEdaKdB")
   </div>
 </template>
 
 <script>
 import TextChanger from '@/components/TextChanger'
+
+window.toClipboard = function() {
+  var copyText = document.getElementById("bitcoinInput");
+  copyText.select();
+  document.execCommand("Copy");
+  alert("Bitcoin Addres Copy on Clipboard");
+}
 
 export default {
   name: 'app',
@@ -44,6 +59,9 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Bad+Script|Courgette|Poiret+One')
 @import "./assets/_style.sass"
 
+a, a:link, a:visited, a:hover
+  color: inherit
+
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
@@ -56,10 +74,8 @@ export default {
   transition-property: opacity
   transition-duration: .25s
 
-
 .fade-enter-active
   transition-delay: .25s
-
 
 .fade-enter, .fade-leave-active
   opacity: 0

@@ -25,22 +25,22 @@
         h5
           small by {{topDetail[0].author}}
             br
-            small {{algorithms[0].count}} References scince {{algorithms[0].countYears[0].year}}
+            small {{algorithms[0].count}} References since {{algorithms[0].countYears[0].year}}
     .row
-      .col.m6.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[1].title} })")
+      .col.m6.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[2].title} })")
         img(v-if="topDetail[1].imgUrl" :src="topDetail[1].imgUrl", alt="alt"  style="max-width:200px;").circle
         h4.metaName.bold {{algorithms[1]._id.algorithmname}}
         h5
-          small by {{topDetail[1].author}}
+          small by {{topDetail[2].author}}
             br
-            small {{algorithms[1].count}} References scince {{algorithms[1].countYears[0].year}}
-      .col.m6.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[2].title} })")
+            small {{algorithms[1].count}} References since {{topDetail[2].year}}
+      .col.m6.s12(v-on:click="$router.push({ name: 'Algorithm', params:{AlgName: topDetail[1].title} })")
         img(v-if="topDetail[2].imgUrl" :src="topDetail[2].imgUrl", alt="alt"  style="max-width:200px;").circle
         h4.metaName.bold {{algorithms[2]._id.algorithmname}}
         h5
-          small by {{topDetail[2].author}}
+          small by {{topDetail[1].author}}
             br
-            small {{algorithms[2].count}} References scince {{algorithms[2].countYears[0].year}}
+            small {{algorithms[2].count}} References since {{topDetail[1].year}}
   .page#listAll.fullH
     h2 List 'em All
     .container
