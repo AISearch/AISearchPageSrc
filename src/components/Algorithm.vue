@@ -65,7 +65,7 @@ export default {
   },
   mounted(){
     this.algorithmname = this.$route.params.AlgName;
-    axios.get('https://metaheuristicsapi.herokuapp.com/papers/countWords/' + this.algorithmname + '?limit=200')
+    axios.get('http://104.131.47.192:5000/papers/countWords/' + this.algorithmname + '?limit=200')
       .then((response)=>{
         response.data.forEach( (w,i) =>{
           this.words.push([w[0], i]);
@@ -80,7 +80,7 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
-      axios.get('https://metaheuristicsapi.herokuapp.com/list?query={%22title%22:%22' + this.algorithmname + '%22}')
+      axios.get('http://104.131.47.192:5000/list?query={%22title%22:%22' + this.algorithmname + '%22}')
         .then((response)=>{
           this.details = response.data[0];
         })
@@ -90,7 +90,7 @@ export default {
       setInterval(()=>{
         this.randNum = Math.floor(Math.random()*100);
       }, 300);
-      axios.get('https://metaheuristicsapi.herokuapp.com/papers/algorithmAuthors/' + this.algorithmname)
+      axios.get('http://104.131.47.192:5000/papers/algorithmAuthors/' + this.algorithmname)
         .then((response)=>{
           response.data.forEach(a => {
             this.authors.push(a);

@@ -14,7 +14,7 @@ export default {
   },
   mounted(){
     plotlyData=[];
-    axios.get('https://metaheuristicsapi.herokuapp.com/papers/papersPerYear')
+    axios.get('http://104.131.47.192:5000/papers/papersPerYear')
       .then((response)=>{
         //console.log(response)
         var x=[], y=[], sizes=[], bestAl=[];

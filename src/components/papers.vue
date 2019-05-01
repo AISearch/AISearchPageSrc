@@ -100,7 +100,7 @@ export default {
       this.updateInfo();
     },
     updateInfo:function(){
-      var apiUrl = 'https://metaheuristicsapi.herokuapp.com/papers?';
+      var apiUrl = 'http://104.131.47.192:5000/papers?';
       var params = [];
       var query = [];
       this.query = JSON.parse(JSON.stringify(this.$route.query));

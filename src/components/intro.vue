@@ -71,14 +71,14 @@ export default {
     TextChanger
   },
   mounted(){
-    axios.get('https://metaheuristicsapi.herokuapp.com/papers/count')
+    axios.get('http://104.131.47.192:5000/papers/count')
       .then((response)=>{
         //console.log(response)
         response.data.forEach(v => {
           this.algorithms.push(v);
         });
         this.loading = false;
-        axios.get('https://metaheuristicsapi.herokuapp.com/list?query={%22$or%22:[{%22title%22:%22' +
+        axios.get('http://104.131.47.192:5000/list?query={%22$or%22:[{%22title%22:%22' +
           this.algorithms[0]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[1]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[2]._id.algorithmname + '%22}]}')
           .then((response)=>{
             response.data.forEach( a => {
