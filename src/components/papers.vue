@@ -100,7 +100,7 @@ export default {
       this.updateInfo();
     },
     updateInfo:function(){
-      var apiUrl = 'http://104.131.47.192:5000/papers?';
+      var apiUrl = 'http://aeroreyna.com:8080/papers?';
       var params = [];
       var query = [];
       this.query = JSON.parse(JSON.stringify(this.$route.query));
