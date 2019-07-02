@@ -71,14 +71,14 @@ export default {
     TextChanger
   },
   mounted(){
-    axios.get('http://aeroreyna.com:8080/papers/count')
+    axios.get('https://www.aeroreyna.com:8443/papers/count')
       .then((response)=>{
         //console.log(response)
         response.data.forEach(v => {
           this.algorithms.push(v);
         });
         this.loading = false;
-        axios.get('http://aeroreyna.com:8080/list?query={%22$or%22:[{%22title%22:%22' +
+        axios.get('https://www.aeroreyna.com:8443/list?query={%22$or%22:[{%22title%22:%22' +
           this.algorithms[0]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[1]._id.algorithmname + '%22},{%22title%22:%22' + this.algorithms[2]._id.algorithmname + '%22}]}')
           .then((response)=>{
             response.data.forEach( a => {

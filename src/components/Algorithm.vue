@@ -65,7 +65,7 @@ export default {
   },
   mounted(){
     this.algorithmname = this.$route.params.AlgName;
-    axios.get('http://aeroreyna.com:8080/papers/countWords/' + this.algorithmname + '?limit=200')
+    axios.get('https://www.aeroreyna.com:8443/papers/countWords/' + this.algorithmname + '?limit=200')
       .then((response)=>{
         response.data.forEach( (w,i) =>{
           this.words.push([w[0], i]);
@@ -80,7 +80,7 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
-      axios.get('http://aeroreyna.com:8080/list?query={%22title%22:%22' + this.algorithmname + '%22}')
+      axios.get('https://www.aeroreyna.com:8443/list?query={%22title%22:%22' + this.algorithmname + '%22}')
         .then((response)=>{
           this.details = response.data[0];
         })
@@ -90,7 +90,7 @@ export default {
       setInterval(()=>{
         this.randNum = Math.floor(Math.random()*100);
       }, 300);
-      axios.get('http://aeroreyna.com:8080/papers/algorithmAuthors/' + this.algorithmname)
+      axios.get('https://www.aeroreyna.com:8443/papers/algorithmAuthors/' + this.algorithmname)
         .then((response)=>{
           response.data.forEach(a => {
             this.authors.push(a);

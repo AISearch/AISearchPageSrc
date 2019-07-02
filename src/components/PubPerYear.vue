@@ -14,7 +14,7 @@ export default {
   },
   mounted(){
     plotlyData=[];
-    axios.get('http://aeroreyna.com:8080/papers/papersPerYear')
+    axios.get('https://www.aeroreyna.com:8443/papers/papersPerYear')
       .then((response)=>{
         //console.log(response)
         var x=[], y=[], sizes=[], bestAl=[];
